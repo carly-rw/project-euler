@@ -4,21 +4,38 @@
 # What is the largest prime factor of the number 600851475143 ?
 
 def main():
-    input = int(input("Please enter a number!"))
-    result = find_largest_prime_factor(input)
-    print("Result: ", result)
+    user_input = int(input("Please enter a number: "))
+    primes = get_primes(user_input)
+    print(primes)
+    prime_factors = get_prime_factors(primes, user_input)
+    print("Result: ", max(prime_factors))
 
-def find_largest_prime_factor(k):
-    prime_factors = [x for x in k if is_prime_factor(x)]
-    return prime_factors
+def get_prime_factors(primes, number):
+    quotient = number
+    prime_factors = []
+    for prime in primes: 
+        while quotient % prime == 0: 
+            quotient = int(quotient/prime)
+            if is_prime(primes, quotient):
+                prime_factors.append(quotient)
+                return prime_factors
+            prime_factors.append(prime)
+    return prime_factors 
 
-def is_prime_factor(x): 
-    prime_numbers = range(2, x+1)
-    for i in prime_numbers: 
-        next_value = prime_numbers[i]
-        prime_numbers = prime_numbers.reduce
+def is_prime(primes, value):
+    if value not in primes: 
+        return False
+    return True
 
-        prime_numbers = prime_numbers.remove()
-
-
-print(find_largest_prime_factor(600851475143))
+# implement a generator 
+# for OO, create an object with the primes and then store 
+def get_primes(x): 
+    prime_bools = [False]*2 + [True for y in range(2, x+1)]
+    for i in range(x+1): 
+        if prime_bools[i]: 
+            for j in range(i*i, x+1, i): 
+                prime_bools[j] = False
+    return [index for index, value in enumerate(prime_bools) if value]
+    
+if __name__ == '__main__':
+    main()
